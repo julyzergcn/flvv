@@ -3,8 +3,6 @@
 
 URLS = '''
 
-http://v.youku.com/v_show/id_XNjgwNDE4MzQ0.html
-
 
 '''
 
@@ -35,7 +33,10 @@ def get_title_urls(url):
 def download(url):
     title, urls = get_title_urls(url)
     for i,url in enumerate(urls):
-        fname = u'%s_%s_%s.flv' % (title, len(urls), i+1)
+        if len(urls) > 1:
+            fname = u'%s_%s_%s.flv' % (title, len(urls), i+1)
+        else:
+            fname = u'%s.flv' % title
         fname = fname.encode('cp936')
         print
         print '---', fname
