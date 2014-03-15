@@ -1,11 +1,16 @@
 #coding=utf-8
 # need curl: http://curl.haxx.se/
 
+new_folder = True
+#~ new_folder = False
+
 URLS = '''
 
+http://v.youku.com/v_show/id_XNjYwODgxMjA0.html
 
 '''
 
+import os
 import re
 import sys
 import subprocess
@@ -34,10 +39,17 @@ def download(url):
     title, urls = get_title_urls(url)
     for i,url in enumerate(urls):
         if len(urls) > 1:
-            fname = u'%s_%s_%s.flv' % (title, len(urls), i+1)
+            fname = u'%s_%s_%s.flv' % (title, len(urls), '%02d'%(i+1) if len(urls)>9 else i+1)
         else:
             fname = u'%s.flv' % title
+
+        if new_folder:
+            if not os.path.exists(title):
+                os.mkdir(title)
+            fname = u'%s/%s' % (title, fname)
+
         fname = fname.encode('cp936')
+
         print
         print '---', fname
         print
